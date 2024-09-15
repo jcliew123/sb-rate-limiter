@@ -4,18 +4,18 @@ import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Bucket4j;
 import io.github.bucket4j.Refill;
-import org.springframework.beans.factory.annotation.Value;
+import jc.spring.ratelimiter.Configuration.RateLimitConfig;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Service
+@RequiredArgsConstructor
 public class RateLimitingService {
-    @Value("${rate.limit.request}")
-    private int requests;
-
-    @Value("${rate.limit.seconds}")
-    private int seconds;
+    private final RateLimitConfig rateLimitConfig;
 
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 
@@ -25,7 +25,7 @@ public class RateLimitingService {
     }
 
     private Bucket createNewBucket(String apiKey){
-        Bandwidth limit = Bandwidth.classic(this.requests, Refill.intervally(this.requests, Duration.ofSeconds(this.seconds)));
+        Bandwidth limit = Bandwidth.classic(rateLimitConfig.getRequests(), Refill.intervally(rateLimitConfig.getRequests(), Duration.ofSeconds(rateLimitConfig.getSeconds())));
         return Bucket4j.builder().addLimit(limit).build();
     }
 }

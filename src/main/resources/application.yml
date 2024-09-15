@@ -4,7 +4,7 @@ spring:
 
 ---
 
-rate:
+myapp:
   limit:
-    requests: 10
+    request: 10
     seconds: 60
