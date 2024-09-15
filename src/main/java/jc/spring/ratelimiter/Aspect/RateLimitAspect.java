@@ -17,7 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class RateLimitAspect {
     private final RateLimitingService rateLimitingService;
 
-    @Around("@annotation(RateLimited)")
+    @Around("@annotation(jc.spring.ratelimiter.Annotation.RateLimited)")
     public Object enforceRateLimit(ProceedingJoinPoint pjp) throws Throwable {
         // Get the current request from the JoinPoint
 

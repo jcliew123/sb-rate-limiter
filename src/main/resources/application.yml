@@ -2,6 +2,10 @@ spring:
   application:
     name: rate-limiter
 
+
+logging:
+  level:
+    root: INFO
 ---
 
 myapp:
