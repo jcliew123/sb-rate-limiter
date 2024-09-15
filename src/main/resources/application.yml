@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rate-limiter
+
+---
+
+rate:
+  limit:
+    requests: 10
+    seconds: 60

@@ -1,5 +1,6 @@
 package jc.spring.ratelimiter.controller;
 
+import jc.spring.ratelimiter.Annotation.RateLimited;
 import jc.spring.ratelimiter.service.RateLimitingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class VersionController {
         }else{
             return new ResponseEntity<>("Too many requests", HttpStatus.TOO_MANY_REQUESTS);
         }
+    }
+
+    @GetMapping("/hello")
+    @RateLimited
+    public ResponseEntity<String> helloWorld(){
+        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
     }
 }
